@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1 id="student-heading">List Students</h1>
+<a href="/admin/students/create">Create new</a>
+<ul>
+    <%for (var i = 0; i < listData.length; i++){%>
+    <li class="data-item">
+        <span><%=listData[i].id%> - <%=listData[i].name%></span>
+        <span>
+            <a href="/admin/students/detail/<%= listData[i]._id%>">Detail</a>&nbsp;
+            <a href="/admin/students/edit/<%= listData[i]._id%>">Edit</a>&nbsp;
+            <a title="<%= listData[i]._id%>" class="btn-delete" href="#">Delete</a>&nbsp;
+        </span>
+    </li>
+    <%}%>
+</ul>
+<div>
+    <%
+    if(parseInt(page) > 1){
+    %>
+    <span>
+        <a href="/admin/students/list?page=<%=parseInt(page)-1%>&limit=<%=limit%>">
+            <%= parseInt(page) - 1%></a>
+    </span>
+    <%
+    }
+    %>
+    <span><%= page%></span>
+    <%
+    if(parseInt(page) < parseInt(totalPage)){
+    %>
+    <span>
+        <a href="/admin/students/list?page=<%=parseInt(page)+1%>&limit=<%=limit%>">
+            <%= parseInt(page) + 1%></a>
+    </span>
+    <%
+    }
+    %>
+</div>
+<script>
+    var deleteBaseUrl = '/admin/students/delete/';
+    var listBtnDelete = document.getElementsByClassName('btn-delete');
+    for (var i = 0; i < listBtnDelete.length; i++) {
+        listBtnDelete[i].onclick = function () {
+            var requestUrl = deleteBaseUrl + this.title;
+            if(confirm('Are you sure wanna delete this student?')){
+                var xmlHttpRequest = new XMLHttpRequest();
+                xmlHttpRequest.onreadystatechange = function(){
+                    if(this.status == 200 && this.readyState == 4){
+                        alert('Delete success');
+                        location.reload();
+                    }
+                };
+                xmlHttpRequest.open('POST', requestUrl, true);
+                xmlHttpRequest.send();
+            }
+            return false
+        }
+    }
+</script>
+</body>
+</html>

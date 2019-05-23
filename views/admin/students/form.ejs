@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Students Form</h1>
+<%
+if(typeof errors !== 'undefined' && errors.length > 0){
+for (var i = 0; i < errors.length; i++) {
+%>
+    <div class="error"><%= errors[i].param %> - <%= errors[i].msg %></div>
+<%
+}
+}
+%>
+<a href="/admin/students/list">List Student</a>
+<form action="<%= action %>" method="post" id="student-form">
+    <div>
+        ID <input type="number" id="id" name="id" value="<%= obj.id %>">
+    </div>
+    <div>
+        Name <input type="text" id="name" name="name" value="<%= obj.name %>">
+    </div>
+    <div>
+        Email <input type="text" name="email" value="<%= obj.email %>">
+    </div>
+    <div>
+        Score <input type="number" name="score" value="<%= obj.score %>">
+    </div>
+
+    <div>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Student Detail</h1>
+<a href="/admin/students/list">List Student</a>&nbsp;
+<a href="/admin/students/create">Create Student</a>
+
+<div>
+    ID : <%= id%>
+</div>
+
+<div>
+    Name : <%= name %>
+</div>
+
+<div>
+    Email : <%= email %>
+</div>
+
+<div>
+    Score : <%= score %>
+</div>
+
+<div>
+    <a href="/admin/students/edit/<%=_id%>">Edit</a>&nbsp;
+    <a href="#">Delete</a>
+</div>
+</body>
+</html>

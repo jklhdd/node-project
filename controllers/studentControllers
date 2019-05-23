@@ -2,6 +2,17 @@ var Student = require('../models/student');
 require('mongoose-pagination');
 const { check, validationResult } = require('express-validator/check');
 
+exports.validate = function(method){
+    switch (method){
+        case 'save':{
+            return [
+                check('name', 'Name is required!').exists(),
+                check('email', 'Invalid email').exists().isEmail(),
+            ]
+        }
+    }
+}
+
 exports.getList = function (req, resp) {
     var page = req.query.page;
     var limit = req.query.limit;
