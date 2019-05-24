@@ -35,6 +35,11 @@ for (var i = 0; i < errors.length; i++) {
         Email <input type="text" name="email" value="<%= obj.email %>">
     </div>
     <div>
+        Image <input type="file" name="image">
+        <input type="hidden" name="imageUrl">
+        <img src="" alt="" id="image-preview" style="width: 100px">
+    </div>
+    <div>
         Score <input type="number" name="score" value="<%= obj.score %>">
     </div>
 
@@ -43,6 +48,66 @@ for (var i = 0; i < errors.length; i++) {
         <input type="reset" value="Reset">
     </div>
 </form>
+<script src="/javascripts/jquery-1.11.1.js"></script>
+<script src="/javascripts/jquery.validate.min.js"></script>
+<script src="/javascripts/additional-methods.min.js"></script>
+
+<script>
+    const cloudName = 'dm39hjrnr';
+    const unsignedUploadPreset = 'odjbpe2q';
+
+    $(document).ready(function () {
+        $('#student-form').validate(
+            {
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 20
+                    },
+                    email: 'required',
+                    score: 'required'
+                },
+                messages: {
+                    name: {
+                        required: 'Please enter product name!',
+                        minlength: 'Please enter name from 5 to 20 character',
+                        maxlength: 'Please enter name from 5 to 20 character',
+
+                    },
+                    email: 'Invalid email',
+                    score: 'Please enter price!'
+                }
+            })
+
+    });
+    var img = document.querySelector('[name="image"]');
+
+    img.onchange = function () {
+        var file = this.files[0];
+        var url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var responseDataJson = JSON.parse(this.responseText);
+                console.log(responseDataJson);
+                var imageUrl = document.querySelector('input[name="imageUrl"]');
+                imageUrl.value = responseDataJson.public_id;
+                document.getElementById('image-preview').src = responseDataJson.url;
+            }
+        }
+        xhr.open('POST', url, true);
+        var fd = new FormData();
+        fd.append('upload_preset', unsignedUploadPreset);
+        fd.append('tags', 'browser_upload');
+        fd.append('file', file);
+        xhr.send(fd);
+    }
+</script>
+
+
+
 
 </body>
 </html>

@@ -13,6 +13,9 @@
 <ul>
     <%for (var i = 0; i < listData.length; i++){%>
     <li class="data-item">
+        <span><img src="https://res.cloudinary.com/dm39hjrnr/image/upload/c_pad,w_300,h_300/<%= listData[i].imageUrl %>"
+                   alt="">
+        </span>
         <span><%=listData[i].id%> - <%=listData[i].name%></span>
         <span>
             <a href="/admin/students/detail/<%= listData[i]._id%>">Detail</a>&nbsp;

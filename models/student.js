@@ -5,13 +5,13 @@ var StudentSchema = new mongoose.Schema({
 
     name: {
         type: String,
-        unique: true,
         required: true,
         trim: true
     },
 
     email: {
         type: String,
+        unique: true,           //cam trung
         required: true,
         trim: true
     },
@@ -20,7 +20,7 @@ var StudentSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-
+    imageUrl: String,
     status: Number
 });
 var Student = mongoose.model('student', StudentSchema);

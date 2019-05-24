@@ -4,7 +4,7 @@ var studentControllers = require('../controllers/studentControllers');
 
 router.get('/create', studentControllers.create);
 
-router.post('/create', studentControllers.validate('save'), studentControllers.save);
+router.post('/create', studentControllers.save);
 
 router.get('/list', studentControllers.getList);
 
