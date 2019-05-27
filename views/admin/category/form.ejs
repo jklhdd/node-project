@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<h1>Class Form</h1>
+<h1>Category Form</h1>
 
 <%
 if(typeof errors !== 'undefined' && errors.length > 0){
@@ -24,11 +24,9 @@ for (var i = 0; i < errors.length; i++) {
 }
 }
 %>
-<a href="/admin/class/list">List Class</a>
+<a href="/admin/category/list">List Class</a>
 <form action="<%= action %>" method="post" id="class-form">
-    <div>
-        ID <input type="text" id="id" name="id" value="<%= obj.id %>">
-    </div>
+
     <div>
         Name <input type="number" name="name" value="<%= obj.name %>">
     </div>

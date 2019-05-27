@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<h1>Students Form</h1>
+<h1>Book Form</h1>
 <%
 if(typeof errors !== 'undefined' && errors.length > 0){
 for (var i = 0; i < errors.length; i++) {
@@ -23,25 +23,27 @@ for (var i = 0; i < errors.length; i++) {
 }
 }
 %>
-<a href="/admin/students/list">List Student</a>
-<form action="<%= action %>" method="post" id="student-form">
-    <div>
-        ID <input type="number" id="id" name="id" value="<%= obj.id %>">
-    </div>
+<a href="/admin/book/list">List Book</a>
+<form action="<%= action %>" method="post" id="book-form">
+
     <div>
         Name <input type="text" id="name" name="name" value="<%= obj.name %>">
     </div>
+
     <div>
-        Email <input type="text" name="email" value="<%= obj.email %>">
+        Category <input type="text" name="category" value="<%= obj.category %>">
     </div>
+
+    <div>
+        Price <input type="number" name="price" value="<%= obj.price %>">
+    </div>
+
     <div>
         Image <input type="file" name="image">
         <input type="hidden" name="imageUrl">
         <img src="" alt="" id="image-preview" style="width: 100px">
     </div>
-    <div>
-        Score <input type="number" name="score" value="<%= obj.score %>">
-    </div>
+
 
     <div>
         <input type="submit" value="Submit">
@@ -57,25 +59,20 @@ for (var i = 0; i < errors.length; i++) {
     const unsignedUploadPreset = 'odjbpe2q';
 
     $(document).ready(function () {
-        $('#student-form').validate(
+        $('#book-form').validate(
             {
                 rules: {
                     name: {
                         required: true,
-                        minlength: 5,
-                        maxlength: 20
+
                     },
-                    email: 'required',
-                    score: 'required'
+                    price: 'required'
                 },
                 messages: {
                     name: {
                         required: 'Please enter product name!',
-                        minlength: 'Please enter name from 5 to 20 character',
-                        maxlength: 'Please enter name from 5 to 20 character',
 
                     },
-                    email: 'Invalid email',
                     score: 'Please enter price!'
                 }
             })
@@ -105,9 +102,6 @@ for (var i = 0; i < errors.length; i++) {
         xhr.send(fd);
     }
 </script>
-
-
-
 
 </body>
 </html>

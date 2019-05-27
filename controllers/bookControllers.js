@@ -1,4 +1,4 @@
-var Student = require('../models/student');
+var book = require('../models/book');
 require('mongoose-pagination');
 const { check, validationResult } = require('express-validator/check');
 
@@ -7,7 +7,7 @@ exports.validate = function(method){
         case 'save':{
             return [
                 check('name', 'Name is required!').exists(),
-                check('email', 'Invalid email').exists().isEmail(),
+                check('price', 'Invalid price').exists(),
             ]
         }
     }
@@ -17,7 +17,7 @@ exports.getList = function (req, resp) {
     var page = req.query.page;
     var limit = req.query.limit;
     var responseData;
-    Student.find().where('status').ne(-1).paginate(parseInt(page), parseInt(limit),
+    book.find().where('status').ne(-1).paginate(parseInt(page), parseInt(limit),
         function (err, listData, totalItem) {
             responseData = {
                 'listData': listData,
@@ -25,20 +25,20 @@ exports.getList = function (req, resp) {
                 'page': page,
                 'limit': limit
             };
-            resp.render('admin/students/list', responseData);
+            resp.render('admin/book/list', responseData);
         });
 };
 
 exports.create = function (req, resp) {
     var responseData = {
-        'action': '/admin/students/create',
-        'obj': new Student()
+        'action': '/admin/book/create',
+        'obj': new book()
     };
-    resp.render('admin/students/form', responseData);
+    resp.render('admin/book/form', responseData);
 };
 
 exports.save = function (req, resp) {
-    var obj = new Student(req.body);
+    var obj = new book(req.body);
     if (req.files && req.files.image) {
         var fileGettingUploaded = req.files.image.data;
         cloudinary.uploader
@@ -49,7 +49,7 @@ exports.save = function (req, resp) {
                     if (err) {
                         return resp.status(500).send(err);
                     } else {
-                        return resp.redirect('/admin/students/list');
+                        return resp.redirect('/admin/book/list');
                     }
                 });
 
@@ -61,41 +61,41 @@ exports.save = function (req, resp) {
             if (err) {
                 return resp.status(500).send(err);
             } else {
-                return resp.redirect('/admin/students/list');
+                return resp.redirect('/admin/book/list');
             }
         });
     }
 
 };
     exports.getDetail = function (req, resp) {
-    Student.findById(req.params.id, function (err, obj) {
+    book.findById(req.params.id, function (err, obj) {
         if (err) {
             return res.status(500).send(err);
         } else {
             var responseData = {
                 'obj': obj
             };
-            resp.render('admin/students/detail', obj);
+            resp.render('admin/book/detail', obj);
         }
     });
 };
 
     exports.edit = function (req, resp) {
-        Student.findById(req.params.id, function (err, obj) {
+        book.findById(req.params.id, function (err, obj) {
             if (err) {
                 return res.status(500).send(err);
             } else {
                 var responseData = {
-                    'action': '/admin/students/edit/' + req.params.id,
+                    'action': '/admin/book/edit/' + req.params.id,
                     'obj': obj
                 };
-                resp.render('admin/students/form', responseData);
+                resp.render('admin/book/form', responseData);
             }
         });
     };
 
     exports.update = function (req, resp) {
-        Student.findByIdAndUpdate(
+        book.findByIdAndUpdate(
             req.params.id,
             req.body,
             {new: false},
@@ -103,13 +103,13 @@ exports.save = function (req, resp) {
                 if (err) {
                     return res.status(500).send(err);
                 } else {
-                    resp.redirect('/admin/students/list');
+                    resp.redirect('/admin/book/list');
                 }
             });
     };
 
     exports.delete = function (req, resp) {
-        Student.findByIdAndUpdate(
+        book.findByIdAndUpdate(
             req.params.id,
             {
                 'status': -1
@@ -121,7 +121,7 @@ exports.save = function (req, resp) {
                 if (err) {
                     return res.status(500).send(err);
                 } else {
-                    resp.redirect('/admin/students/list');
+                    resp.redirect('/admin/book/list');
                 }
             });
     };

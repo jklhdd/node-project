@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= name %> Detail</title>
+</head>
+<body>
+<h1><%= name %> Detail</h1>
+<a href="/admin/book/list">List Book</a>&nbsp;
+<a href="/admin/book/create">Create Book</a>
+
+<div>
+    Name : <%= name %>
+</div>
+
+<div>
+    Category : <%= category %>
+</div>
+
+<div>
+    <img src="https://res.cloudinary.com/dm39hjrnr/image/upload/c_pad,w_300,h_300/<%= imageUrl %>" alt="">
+</div>
+
+<div>
+    Price : <%= price %>
+</div>
+
+<div>
+    <a href="/admin/book/edit/<%=_id%>">Edit</a>&nbsp;
+    <a href="#">Delete</a>
+</div>
+
+<script>
+    var deleteBaseUrl = '/admin/book/delete/';
+    var listBtnDelete = document.getElementsByClassName('btn-delete');
+    for (var i = 0; i < listBtnDelete.length; i++) {
+        listBtnDelete[i].onclick = function () {
+            var requestUrl = deleteBaseUrl + this.title;
+            if(confirm('Are you sure wanna delete this book?')){
+                var xmlHttpRequest = new XMLHttpRequest();
+                xmlHttpRequest.onreadystatechange = function(){
+                    if(this.status == 200 && this.readyState == 4){
+                        alert('Delete success');
+                        location.reload();
+                    }
+                };
+                xmlHttpRequest.open('POST', requestUrl, true);
+                xmlHttpRequest.send();
+            }
+            return false
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,11 +1,11 @@
-var Classroom = require('../models/class');
+var category = require('../models/category');
 require('mongoose-pagination');
 
 exports.getList = function (req, resp) {
     var page = req.query.page;
     var limit = req.query.limit;
     var responseData;
-    Classroom.find().where('status').ne(-1).paginate(parseInt(page), parseInt(limit),
+    category.find().where('status').ne(-1).paginate(parseInt(page), parseInt(limit),
         function (err, listData, totalItem) {
             responseData = {
                 'listData': listData,
@@ -13,57 +13,57 @@ exports.getList = function (req, resp) {
                 'page': page,
                 'limit': limit
             };
-            resp.render('admin/class/list', responseData);
+            resp.render('admin/category/list', responseData);
         });
 };
 
 exports.create = function (req, resp) {
     var responseData = {
-        'action': '/admin/class/create',
-        'obj': new Classroom()
+        'action': '/admin/category/create',
+        'obj': new category()
     };
-    resp.render('admin/class/form', responseData);
+    resp.render('admin/category/form', responseData);
 };
 
 exports.save = function (req, resp) {
-    var obj = new Classroom(req.body);
+    var obj = new category(req.body);
     obj.save(function (err) {
         if (err) {
             return resp.status(500).send(err);
         } else {
-            return resp.redirect('/admin/class/list');
+            return resp.redirect('/admin/category/list');
         }
     });
 }
 exports.getDetail = function (req, resp) {
-    Classroom.findById(req.params.id, function (err, obj) {
+    category.findById(req.params.id, function (err, obj) {
         if (err) {
             return res.status(500).send(err);
         } else {
             var responseData = {
                 'obj': obj
             };
-            resp.render('admin/class/detail', obj);
+            resp.render('admin/category/detail', obj);
         }
     });
 };
 
 exports.edit = function (req, resp) {
-    Classroom.findById(req.params.id, function (err, obj) {
+    category.findById(req.params.id, function (err, obj) {
         if (err) {
             return res.status(500).send(err);
         } else {
             var responseData = {
-                'action': '/admin/students/edit/' + req.params.id,
+                'action': '/admin/category/edit/' + req.params.id,
                 'obj': obj
             };
-            resp.render('admin/students/form', responseData);
+            resp.render('admin/category/form', responseData);
         }
     });
 };
 
 exports.update = function (req, resp) {
-    Classroom.findByIdAndUpdate(
+    category.findByIdAndUpdate(
         req.params.id,
         req.body,
         {new: false},
@@ -71,13 +71,13 @@ exports.update = function (req, resp) {
             if (err) {
                 return res.status(500).send(err);
             } else {
-                resp.redirect('/admin/class/list');
+                resp.redirect('/admin/category/list');
             }
         });
 };
 
 exports.delete = function (req, resp) {
-    Classroom.findByIdAndUpdate(
+    category.findByIdAndUpdate(
         req.params.id,
         {
             'status': -1
@@ -89,7 +89,7 @@ exports.delete = function (req, resp) {
             if (err) {
                 return res.status(500).send(err);
             } else {
-                resp.redirect('/admin/class/list');
+                resp.redirect('/admin/category/list');
             }
         });
 };

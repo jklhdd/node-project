@@ -8,18 +8,18 @@
     <title>Document</title>
 </head>
 <body>
-<h1 id="student-heading">List Students</h1>
-<a href="/admin/students/create">Create new</a>
+<h1 id="book-heading">List Book</h1>
+<a href="/admin/book/create">Create new</a>
 <ul>
     <%for (var i = 0; i < listData.length; i++){%>
     <li class="data-item">
         <span><img src="https://res.cloudinary.com/dm39hjrnr/image/upload/c_pad,w_300,h_300/<%= listData[i].imageUrl %>"
                    alt="">
         </span>
-        <span><%=listData[i].id%> - <%=listData[i].name%></span>
+        <span> <%=listData[i].name%> </span>
         <span>
-            <a href="/admin/students/detail/<%= listData[i]._id%>">Detail</a>&nbsp;
-            <a href="/admin/students/edit/<%= listData[i]._id%>">Edit</a>&nbsp;
+            <a href="/admin/book/detail/<%= listData[i]._id%>">Detail</a>&nbsp;
+            <a href="/admin/book/edit/<%= listData[i]._id%>">Edit</a>&nbsp;
             <a title="<%= listData[i]._id%>" class="btn-delete" href="#">Delete</a>&nbsp;
         </span>
     </li>
@@ -30,7 +30,7 @@
     if(parseInt(page) > 1){
     %>
     <span>
-        <a href="/admin/students/list?page=<%=parseInt(page)-1%>&limit=<%=limit%>">
+        <a href="/admin/book/list?page=<%=parseInt(page)-1%>&limit=<%=limit%>">
             <%= parseInt(page) - 1%></a>
     </span>
     <%
@@ -41,7 +41,7 @@
     if(parseInt(page) < parseInt(totalPage)){
     %>
     <span>
-        <a href="/admin/students/list?page=<%=parseInt(page)+1%>&limit=<%=limit%>">
+        <a href="/admin/book/list?page=<%=parseInt(page)+1%>&limit=<%=limit%>">
             <%= parseInt(page) + 1%></a>
     </span>
     <%
@@ -49,12 +49,12 @@
     %>
 </div>
 <script>
-    var deleteBaseUrl = '/admin/students/delete/';
+    var deleteBaseUrl = '/admin/book/delete/';
     var listBtnDelete = document.getElementsByClassName('btn-delete');
     for (var i = 0; i < listBtnDelete.length; i++) {
         listBtnDelete[i].onclick = function () {
             var requestUrl = deleteBaseUrl + this.title;
-            if(confirm('Are you sure wanna delete this student?')){
+            if(confirm('Are you sure wanna delete this book?')){
                 var xmlHttpRequest = new XMLHttpRequest();
                 xmlHttpRequest.onreadystatechange = function(){
                     if(this.status == 200 && this.readyState == 4){
